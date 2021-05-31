@@ -43,7 +43,7 @@ public class Solicitud {
 	private int habitaciones;
 	
 	@Column(name="banos")
-	private String banos;
+	private int banos;
 	
 	@Column(name="presupuesto")
 	private int presupuesto;
@@ -59,7 +59,7 @@ public class Solicitud {
 	}
 
 	public Solicitud(long id, Usuario usuarioid, String titulo, String tiposol, int superficie, String provincia,
-			String distrito, int habitaciones, String banos, int presupuesto, boolean cochera, boolean estado) {
+			String distrito, int habitaciones, int banos, int presupuesto, boolean cochera, boolean estado) {
 		super();
 		this.id = id;
 		this.usuarioid = usuarioid;
@@ -76,7 +76,7 @@ public class Solicitud {
 	}
 
 	public Solicitud(Usuario usuarioid, String titulo, String tiposol, int superficie, String provincia,
-			String distrito, int habitaciones, String banos, int presupuesto, boolean cochera, boolean estado) {
+			String distrito, int habitaciones, int banos, int presupuesto, boolean cochera, boolean estado) {
 		super();
 		this.usuarioid = usuarioid;
 		this.titulo = titulo;
@@ -155,11 +155,11 @@ public class Solicitud {
 		this.habitaciones = habitaciones;
 	}
 
-	public String getBanos() {
+	public int getBanos() {
 		return banos;
 	}
 
-	public void setBanos(String banos) {
+	public void setBanos(int banos) {
 		this.banos = banos;
 	}
 

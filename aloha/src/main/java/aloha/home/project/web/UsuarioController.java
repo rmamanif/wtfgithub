@@ -78,6 +78,8 @@ public class UsuarioController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<Usuario> login(@RequestBody Usuario usuario) {
 		Usuario usr=null;
+		System.out.println(usuario.getCorreo());
+		System.out.println(usuario.getPassword());
 		try {
 			usr=service.findByCorreoAndPassword(usuario.getCorreo(), usuario.getPassword());
 			System.out.println(usuario.getCorreo());
