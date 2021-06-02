@@ -1,8 +1,11 @@
 package aloha.home.project.web;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import aloha.home.project.domain.Solicitud;
+import aloha.home.project.domain.Usuario;
 import aloha.home.project.exception.SolicitudNotFoundException;
 import aloha.home.project.service.SolicitudService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value="/solicitud")
 public class SolicitudController {
 	
@@ -68,6 +73,7 @@ public class SolicitudController {
 			return newsolicitud;
 		}
 	
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable long id) {
 		try{
@@ -77,5 +83,6 @@ public class SolicitudController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND); 
 		}
 	}
+	
 	
 }

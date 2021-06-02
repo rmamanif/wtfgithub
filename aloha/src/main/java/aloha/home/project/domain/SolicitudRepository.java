@@ -8,4 +8,6 @@ public interface SolicitudRepository extends JpaRepository<Solicitud, Long>{
 
 	List<Solicitud> findByTiposol(String tipo_solicitud);
 	
+	List<Solicitud> findByAndUsuarioid(long id);
+	
 }

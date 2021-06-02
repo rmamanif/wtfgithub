@@ -1,15 +1,30 @@
 package aloha.home.project.domain;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sun.istack.Nullable;
+
 @Entity
-@Table(name="usuario", indexes = {@Index(name="no_dupe_correo2",columnList = "correo", unique = true)})
+@Table(name="usuario", indexes = {@Index(name="no_dupe_correo",columnList = "correo", unique = true)})
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +45,37 @@ public class Usuario {
 	@Column(name ="token")
 	private String token;
 	
+	@OneToMany(mappedBy = "usuarioid")
+	private List<Solicitud> solicitudes;
+	
+	
+	
+	@JsonManagedReference
+	public List<Solicitud> getSolicitudes() {
+		return solicitudes;
+	}
+
+
+	public void setSolicitudes(List<Solicitud> solicitudes) {
+		this.solicitudes = solicitudes;
+	}
+
+
+	public Usuario(long id, String correo, String nombre, String apellido, String password, String telefono,
+			String celular, String token, List<Solicitud> solicitudes) {
+		super();
+		this.id = id;
+		this.correo = correo;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.password = password;
+		this.telefono = telefono;
+		this.celular = celular;
+		this.token = token;
+		this.solicitudes = solicitudes;
+	}
+
+
 	public Usuario() {
 		super();
 	}
@@ -142,12 +188,13 @@ public class Usuario {
 		this.password = password;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", correo=" + correo + ", nombre=" + nombre + ", apellido=" + apellido
 				+ ", password=" + password + ", telefono=" + telefono + ", celular=" + celular + ", token=" + token
-				+ "]";
+				+ ", solicitudes=" + solicitudes + "]";
 	}
-	
+
 	
 }

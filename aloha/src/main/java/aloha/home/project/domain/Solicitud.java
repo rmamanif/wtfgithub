@@ -1,5 +1,9 @@
 package aloha.home.project.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,8 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "solicitud")
@@ -20,9 +29,11 @@ public class Solicitud {
 	@Column (name="id")
 	private long id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="usuario_id")
-	Usuario usuarioid;
+	@ManyToOne
+	@JoinColumn(name="usuarioid", insertable = false, updatable = false)
+	private Usuario usuario;
+	
+	private long usuarioid;
 	
 	@Column(name="titulo")
 	private String titulo;
@@ -58,10 +69,12 @@ public class Solicitud {
 		super();
 	}
 
-	public Solicitud(long id, Usuario usuarioid, String titulo, String tiposol, int superficie, String provincia,
-			String distrito, int habitaciones, int banos, int presupuesto, boolean cochera, boolean estado) {
+	
+	
+
+	public Solicitud(long usuarioid, String titulo, String tiposol, int superficie, String provincia, String distrito,
+			int habitaciones, int banos, int presupuesto, boolean cochera, boolean estado) {
 		super();
-		this.id = id;
 		this.usuarioid = usuarioid;
 		this.titulo = titulo;
 		this.tiposol = tiposol;
@@ -75,9 +88,13 @@ public class Solicitud {
 		this.estado = estado;
 	}
 
-	public Solicitud(Usuario usuarioid, String titulo, String tiposol, int superficie, String provincia,
+
+
+
+	public Solicitud(Usuario usuario, long usuarioid, String titulo, String tiposol, int superficie, String provincia,
 			String distrito, int habitaciones, int banos, int presupuesto, boolean cochera, boolean estado) {
 		super();
+		this.usuario = usuario;
 		this.usuarioid = usuarioid;
 		this.titulo = titulo;
 		this.tiposol = tiposol;
@@ -90,6 +107,31 @@ public class Solicitud {
 		this.cochera = cochera;
 		this.estado = estado;
 	}
+
+
+
+
+	public Solicitud(long id, Usuario usuario, long usuarioid, String titulo, String tiposol, int superficie,
+			String provincia, String distrito, int habitaciones, int banos, int presupuesto, boolean cochera,
+			boolean estado) {
+		super();
+		this.id = id;
+		this.usuario = usuario;
+		this.usuarioid = usuarioid;
+		this.titulo = titulo;
+		this.tiposol = tiposol;
+		this.superficie = superficie;
+		this.provincia = provincia;
+		this.distrito = distrito;
+		this.habitaciones = habitaciones;
+		this.banos = banos;
+		this.presupuesto = presupuesto;
+		this.cochera = cochera;
+		this.estado = estado;
+	}
+
+
+
 
 	public long getId() {
 		return id;
@@ -99,12 +141,13 @@ public class Solicitud {
 		this.id = id;
 	}
 
-	public Usuario getUsuarioid() {
-		return usuarioid;
+	@JsonBackReference
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setUsuarioid(Usuario usuarioid) {
-		this.usuarioid = usuarioid;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getTitulo() {
@@ -187,13 +230,27 @@ public class Solicitud {
 		this.estado = estado;
 	}
 
+	public long getUsuarioid() {
+		return usuarioid;
+	}
+
+
+
+	public void setUsuarioid(long usuarioid) {
+		this.usuarioid = usuarioid;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "Solicitud [id=" + id + ", usuarioid=" + usuarioid + ", titulo=" + titulo + ", tiposol=" + tiposol
-				+ ", superficie=" + superficie + ", provincia=" + provincia + ", distrito=" + distrito
-				+ ", habitaciones=" + habitaciones + ", banos=" + banos + ", presupuesto=" + presupuesto + ", cochera="
-				+ cochera + ", estado=" + estado + "]";
+		return "Solicitud [id=" + id + ", usuario=" + usuario + ", usuarioid=" + usuarioid + ", titulo=" + titulo
+				+ ", tiposol=" + tiposol + ", superficie=" + superficie + ", provincia=" + provincia + ", distrito="
+				+ distrito + ", habitaciones=" + habitaciones + ", banos=" + banos + ", presupuesto=" + presupuesto
+				+ ", cochera=" + cochera + ", estado=" + estado + "]";
 	}
+
+	
 
 	
 	
